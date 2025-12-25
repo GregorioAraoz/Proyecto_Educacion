@@ -14,8 +14,17 @@ from contextlib import contextmanager
 
 # --- Constants & Config ---
 DB_URL = st.secrets["database_url"]
-ADMIN_CODE = "TEACHER2024"  # Simple protection for teacher registration
-SUPER_ADMIN_CODE = "MASTER2024" # Secret code for Admin registration
+# Admin & Registration Codes (Safely loaded from secrets)
+# Fallback to defaults only if secrets are missing (useful for local dev without secrets.toml)
+try:
+    ADMIN_CODE = st.secrets["admin_code"]
+except:
+    ADMIN_CODE = "TEACHER2024" # Default fallback
+
+try:
+    SUPER_ADMIN_CODE = st.secrets["super_admin_code"]
+except:
+    SUPER_ADMIN_CODE = "MASTER2024" # Default fallback
 
 # --- Translations ---
 if 'lang' not in st.session_state:
